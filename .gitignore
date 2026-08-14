@@ -1,0 +1,21 @@
+# Local/private deployment material
+.env
+.env.*
+!.env.example
+local/
+private/
+
+# Editor and operating-system state
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Generated caches and dependencies
+node_modules/
+__pycache__/
+.pytest_cache/
+.tmp/
+tmp/
