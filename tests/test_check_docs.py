@@ -139,6 +139,19 @@ class DocumentationChecksTest(unittest.TestCase):
         ):
             self.assertIn(required, first_bullet)
 
+    def test_copy_paste_prompt_separates_planning_from_implementation(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        readme = (root / "README.md").read_text()
+        prompt = readme.split("Copy-paste prompt:", 1)[1].split("```text", 1)[1].split("```", 1)[0]
+
+        for required in (
+            "first plan, then—only after I approve an implementation phase—help me implement",
+            "Phase 1 is read-only.",
+            "Do not install packages, write configuration, create credentials, start or restart services, or alter network or firewall state.",
+            "Wait for my approval before beginning implementation.",
+        ):
+            self.assertIn(required, prompt)
+
     def test_readme_warns_personal_machine_users_about_private_data(self) -> None:
         root = Path(__file__).resolve().parents[1]
         readme = (root / "README.md").read_text()

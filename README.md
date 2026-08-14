@@ -104,7 +104,7 @@ An AI assistant is recommended for this guide: it can inspect your live OS, reco
 Copy-paste prompt:
 
 ```text
-I want you to help me plan and implement a self-hosted agent stack using this guide:
+I want you to first plan, then—only after I approve an implementation phase—help me implement a self-hosted agent stack using this guide:
 https://github.com/ghosty-11/hermes-stackbook
 
 Objective:
@@ -130,7 +130,9 @@ Working rules:
 9. Run the real acceptance scenario after each phase. Configuration text alone is not proof.
 10. If the installed CLI or current official docs disagree with the guide, show the evidence and adapt the plan.
 
-Start by summarizing the architecture in your own words, checking whether my host meets the requirements, and producing the private planning worksheet. Do not change the system yet.
+Start by summarizing the architecture in your own words, checking whether my host meets the requirements, and returning the private planning worksheet plus a list of operator gates in chat.
+
+Phase 1 is read-only. Do not install packages, write configuration, create credentials, start or restart services, or alter network or firewall state. Wait for my approval before beginning implementation.
 ```
 
 Throughout the build, ask the assistant to explain anything uncertain before you approve it. Keep a private deployment record containing your real paths, identities, credential references, model ledger, and verification evidence; do not add that data to this guide.
