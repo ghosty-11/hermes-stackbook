@@ -34,7 +34,7 @@ hermes profile create engineer --description "Routes bounded software tasks to t
 hermes profile create public-bot --description "Optional public chat with no private or host capabilities."
 ```
 
-A blank profile receives its own `config.yaml`, `.env`, `SOUL.md`, memory, sessions, skills, cron jobs, and state. Avoid `--clone-all` when profiles should not share tokens, memory, plugins, or schedules.
+A blank profile receives its own `config.yaml`, `.env`, `SOUL.md`, memory, sessions, skills, cron jobs, and state. Avoid `--clone-all` when profiles should not share tokens, memory, plugins, or schedules. `--no-skills` creates the profile without seeding bundled skills and keeps it out of later update-time skill sync — useful for a deliberately minimal seat such as a research quarantine or a public bot, at the cost of having to add any skill it later needs by hand.
 
 Inspect each profile:
 
@@ -113,7 +113,7 @@ On the default profile:
 hermes config set gateway.multiplex_profiles true
 ```
 
-Set an explicit `gateway.multiplex_profile_allowlist` in `config.yaml`, then restart only after reviewing the official [multiplexing contract](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways). Do not run secondary gateway services for profiles served by the multiplexer.
+Set an explicit `gateway.multiplex_profile_allowlist` in `config.yaml`, then restart only after reviewing the official [multiplexing contract](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways). Omitting the key is **fail-open for profile selection**: the current default serves *every* installed named profile, so a half-finished or experimental profile directory becomes a served execution scope — its plugins load and its schedules tick — without a deliberate decision. An empty list serves only the default profile. Do not run secondary gateway services for profiles served by the multiplexer.
 
 Test per-profile model, `.env`, memory, skill, cron, and platform resolution. A shared process reduces service count; it does not reduce the need for profile-by-profile verification. Under multiplexing, live sessions for every served profile persist in the serving profile's state database (tagged by profile name), not in each profile's own state file — see [Architecture](architecture.md#data-plane).
 

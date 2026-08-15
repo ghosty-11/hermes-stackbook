@@ -84,6 +84,8 @@ See [Suggested scheduled jobs](scheduled-jobs.md) for a concrete starter schedul
 ## Provider and spend operations
 
 - Record primary, fallback, and auxiliary models by profile.
+- Record the delegation lane separately: native subagents can run on their own configured provider and model rather than the parent's, while still inheriting the parent's fallback chain. Check which one yours actually uses before assuming delegated work bills like its parent — a free primary with a paid fallback and a paid primary look identical until a batch fans out.
+- Pin delegation concurrency and iteration ceilings explicitly. Both are version-dependent defaults that a framework update can raise underneath you, multiplying worst-case tokens per batch; a per-key provider rate limit shared by several profiles is usually the real constraint, not the price.
 - Alert on provider changes for unattended jobs.
 - Prefer provider-diverse fallback.
 - Place local inference last and label degraded output.
