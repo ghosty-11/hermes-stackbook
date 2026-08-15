@@ -221,6 +221,7 @@ Repository policy:
 - [AI contributor instructions](AGENTS.md)
 - [Issue reports and support](SUPPORT.md)
 - [Security reporting](SECURITY.md)
+- [Changelog](CHANGELOG.md)
 
 ## Design rules
 
