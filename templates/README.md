@@ -1,5 +1,9 @@
 # Documentation templates
 
+> **First trial: copy nothing.** For a real deployment, start with the
+> [deployment checklist](deployment-checklist.md) and [profile matrix](profile-matrix.md); add
+> runbooks only once a service has a named owner.
+
 These public-safe templates turn recurring operational work into reviewable records. Copy the narrowest template that matches the reader's job; never fill a template in place.
 
 ## Install into your operational knowledge base

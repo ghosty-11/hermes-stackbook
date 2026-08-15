@@ -1,9 +1,34 @@
 # Changelog
 
+> Skip this while evaluating — it is the guide's change history, not setup steps.
+
 Notable changes to the Hermes Stackbook. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); entries describe documentation
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
+
+## 1.2.0 — 2026-08-15
+
+Newcomer on-ramp, prompted by first-impression feedback from a technical reader who found the
+guide hard to follow and wanted a throwaway machine to experiment on. No security content was
+relaxed; the rigorous material gained scope labels so it stops reading as a prerequisite.
+
+- **New:** [Try it safely](docs/safe-sandbox.md) — a disposable-VM evaluation path with one
+  recommended default, alternatives and their tradeoffs, five preconditions that must hold
+  before installing anything, a bounded 30-minute trial with an explicit stop point,
+  destruction steps, and a plain statement of residual risk.
+- **New:** [Glossary](docs/glossary.md) — only the terms this guide uses in a specific way,
+  grouped by purpose, including an "easy to confuse" section (profile vs OS user vs VM, skill
+  vs plugin, model vs provider, backup vs sync, guard vs eval).
+- **New:** [Core concepts](docs/core-concepts.md) — what each piece is in day-to-day terms,
+  which one a given job needs, and one request followed end to end through the minimum path.
+- README: a three-way entry table, an "In one minute" plain-language summary, a minimum-path
+  diagram beside the full reference architecture, a Step 0 pointing at the sandbox, and a
+  pointer to the sandbox directly beneath the personal-machine warning. The assisted-setup
+  section is now explicitly labelled the real-deployment path.
+- Scope labels added to Operations, Verification, Skills and plugins, Scheduled jobs,
+  Supporting services, Compatibility, both drift runbooks, the template library, and this
+  changelog. Verification also gained a four-check "minimum proof for a first trial" panel.
 
 ## 1.1.1 — 2026-08-15
 
