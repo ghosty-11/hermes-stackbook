@@ -5,6 +5,17 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.1.1 — 2026-08-15
+
+- Profiles: warn that omitting `gateway.multiplex_profile_allowlist` is fail-open — the
+  default serves every installed named profile, so an experimental profile directory
+  becomes a served execution scope; an empty list serves only the default.
+- Profiles: document `--no-skills` for deliberately minimal seats.
+- Operations: record the delegation lane's own provider/model separately from the parent's,
+  and pin delegation concurrency/iteration ceilings — both are version-dependent defaults a
+  framework update can raise underneath you, and a shared per-key provider rate limit is
+  usually the binding constraint rather than price.
+
 ## 1.1.0 — 2026-08-15
 
 Field-evidence corrections and additions from operating the reference deployment:
