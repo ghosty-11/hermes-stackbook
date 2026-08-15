@@ -52,11 +52,13 @@ Keep these stores distinct:
 | Backup repository | Recovery data | Backup service only; restore is operator-gated. |
 
 Field caveat: under a **multiplexed** gateway, live conversation sessions for every served
-profile persist in the serving (default) profile's state database, tagged by profile name —
-the secondary profile's own state file exists but is not the live session store. Config,
-credentials, skills, memory, and cron still resolve per profile. Searching a secondary
-profile's state file for its sessions returns an empty result that reads like a clean one;
-probe the serving profile's store, with a control string you know is present.
+secondary profile persist in the serving (default) profile's state database, tagged with the
+profile's name; the serving profile's own rows may carry no profile tag at all. Config,
+credentials, skills, memory, and cron still resolve per profile. The secondary profile's own
+state file is not empty — standalone CLI runs against that profile home write into it — so
+querying it returns *different* sessions rather than none, which is worse than an empty
+result because it reads like a complete answer. Probe the serving profile's store, and pair
+any negative result with a control string you know is present.
 
 A wiki edit must never silently become a privileged task. A task body must never be injected into every coding session. List metadata first; open untrusted bodies explicitly.
 

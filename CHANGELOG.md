@@ -9,11 +9,14 @@ releases, not software versions. Compatibility evidence for upstream components 
 
 Field-evidence corrections and additions from operating the reference deployment:
 
-- Compatibility ledger: recorded the author's live field deployment (Hermes `7f179ba`,
-  OMP 17.3.4) as a runtime-smoke row ahead of the pinned review anchor.
+- Compatibility ledger: recorded the author's live field deployment (Hermes `27fddcbe5`,
+  OMP 17.3.4) as a runtime-smoke row ahead of the pinned review anchor, including the
+  655-commit framework advance and how it was gated.
 - Architecture + profiles: documented that a multiplexed gateway persists every served
-  profile's live sessions in the serving profile's state database, and the empty-looking
-  per-profile state file trap.
+  secondary profile's live sessions in the serving profile's state database (the serving
+  profile's own rows may be untagged), and that the secondary profile's own state file
+  answers with *different* sessions from standalone CLI runs rather than none — a wrong
+  answer that reads like a complete one.
 - Supporting services: clarified the local-inference rule (single *loaded* model versus a
   small deliberate on-disk inventory) and added three field-tested backup principles
   (backup plane survives the agent plane; stage live databases consistently; expose a
