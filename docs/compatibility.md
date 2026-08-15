@@ -16,6 +16,7 @@ Do not upgrade a row's evidence level because configuration parsed or a process 
 | Guide state | Hermes reference | OMP reference | Evidence | Checked |
 |---|---|---|---|---|
 | Current private candidate | [`bfff32ae8c6a`](https://github.com/NousResearch/hermes-agent/commit/bfff32ae8c6a9c585431997a6cc3d791b6ec9af5) | [`448632b8190e`](https://github.com/can1357/oh-my-pi/commit/448632b8190eac71b8e187880bea234a513773df) | Reference recorded; selected official documentation and source seams reviewed at the pinned revisions, including OMP advisor behavior. Hetzner model availability and publication documentation, links, diagrams, dependency audit, and full-history secret scan checked. No clean-host golden path claimed. | 2026-08-14 |
+| Author's field deployment (ahead of the review anchor) | [`7f179ba`](https://github.com/ghosty-11/hermes-agent/commit/7f179ba0567f47c2d66fe2c17b0aba883d467a3b) (v0.20.1-era, public downstream fork) | OMP release `17.3.4` (native binary) | Runtime smoke: the architecture in this guide is operated live at these newer revisions — multiplexed gateway with an explicit profile allowlist, per-profile cron scheduling, behavioral eval runner, staged-database backups, and restore drill all exercised on a real host. Not a clean-host golden path, and not a re-review of the pinned anchor's documentation. | 2026-08-15 |
 
 The source heads above are comparison anchors. Provider catalogs, hosted documentation, free tiers, and installed CLIs may change without either repository revision changing.
 

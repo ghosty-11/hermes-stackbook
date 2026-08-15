@@ -51,6 +51,13 @@ Keep these stores distinct:
 | OMP session/auth state | Coding sessions and provider credentials | Operator-owned OMP process or OMP auth broker. |
 | Backup repository | Recovery data | Backup service only; restore is operator-gated. |
 
+Field caveat: under a **multiplexed** gateway, live conversation sessions for every served
+profile persist in the serving (default) profile's state database, tagged by profile name —
+the secondary profile's own state file exists but is not the live session store. Config,
+credentials, skills, memory, and cron still resolve per profile. Searching a secondary
+profile's state file for its sessions returns an empty result that reads like a clean one;
+probe the serving profile's store, with a control string you know is present.
+
 A wiki edit must never silently become a privileged task. A task body must never be injected into every coding session. List metadata first; open untrusted bodies explicitly.
 
 ## Gateway topology
