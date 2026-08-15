@@ -1,5 +1,8 @@
 # Skills and plugins
 
+> **Scope:** optional. A first private profile needs no added skills or plugins — skip this
+> while evaluating and return when you have a specific job for one.
+
 A skill is model-readable procedure. A plugin is executable code that can add tools, hooks, commands, platforms, model backends, memory providers, or context engines. Treat those risk levels differently.
 
 ## Start with upstream inventories

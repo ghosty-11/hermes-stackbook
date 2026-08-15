@@ -1,5 +1,10 @@
 # Supporting services
 
+> **Which of these do you need?** Only chat or coding → skip this page except **Backups**.
+> Want current web research → add search and extraction *after* the core works. Need a local
+> model for outages or privacy → add it last, and measure it. Nothing here belongs in a
+> [disposable trial](safe-sandbox.md).
+
 Supporting services exist to make the agent stack more available and auditable. Each one adds an update, backup, and failure surface; install it only when its consumer exists.
 
 ## Network policy

@@ -6,6 +6,34 @@
 
 This is a build and operations guide for people who want useful AI agents on infrastructure they control—not another demo that stops at a chatbot reply.
 
+**New here? Three ways in:**
+
+| If you want to… | Go to | Time |
+|---|---|---|
+| Understand what this is, in plain language | [Core concepts](docs/core-concepts.md) | 15 min, no setup |
+| Try it without risking anything you own | [Try it safely](docs/safe-sandbox.md) | 30 min, disposable |
+| Plan something you intend to keep | [Reading order](#reading-order) below | Half a day upward |
+
+Unfamiliar word? The [glossary](docs/glossary.md) defines only the terms this guide uses in a
+specific way.
+
+## In one minute
+
+**Hermes** is a long-running private assistant service: it stays up, so it can hold a
+conversation over days, run something on a timer, remember context, and reach you through the
+command line or a chat app. A **profile** is one separately configured assistant — its own
+settings, memory, credentials, and allowed tools. **OMP** is optional separate software for
+software engineering: point it at a repository and it edits code, runs tests, and uses a
+debugger. You do not need it to start, and Hermes can do light coding on its own.
+
+The smallest useful result is **one private assistant, one model provider, no automation** —
+reachable only by you. Everything else in this guide is a capability you add later, together
+with the boundary that makes it safe to have.
+
+The core idea the rest of the guide keeps returning to: **instructions are not permissions.**
+A persona file changes how an assistant writes; it does not stop it doing anything. Only an
+absent tool, an absent credential, a separate OS identity, or a network rule does that.
+
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) provides always-on messaging, profiles, schedules, memory, skills, plugins, and task coordination.
 - [Oh My Pi (OMP)](https://github.com/can1357/oh-my-pi) is an optional software-engineering harness for structured edits, LSP, debugging, browser automation, subagents, and multiple model providers.
 - Loopback-only search, extraction, and optional local inference keep routine work available without exposing an agent gateway to the public internet.
@@ -61,6 +89,11 @@ Do not run the stack as your unrestricted daily user or grant it your entire hom
 
 A profile, container, WSL distribution, or sandbox is only a boundary for resources it cannot reach: mounted home directories, forwarded credentials, shared sockets, and broad host permissions defeat the separation. Before using real personal data, test access as the running identity, inspect every enabled tool and mount, review each outbound provider's data-handling policy, and verify that denied files are actually unreadable. If you cannot make that boundary credible, deploy on a separate machine or VM instead of your personal workstation.
 
+> **Want to look at this without that risk?** Start in a disposable virtual machine:
+> **[Try it safely, then throw it away](docs/safe-sandbox.md)** gives one recommended option,
+> the five things that must be true before you install anything, a bounded 30-minute trial,
+> and how to destroy it afterwards.
+
 ## Free and low-cost starting points
 
 Terms, catalogs, quotas, data policies, and availability change. Treat these as leads, verify the primary page on the day you configure them, and keep provider-diverse fallbacks:
@@ -92,7 +125,11 @@ A reader should be able to:
 
 It deliberately does **not** include credentials, bot IDs, provider accounts, private plugins, personal role names, host paths, or production data.
 
-## Recommended setup path: review first, then use an assistant
+## For a real deployment: review first, then use an assistant
+
+This section is the **real-host** path. If you only want to look at the software first, take
+[Try it safely](docs/safe-sandbox.md) instead — it needs none of what follows. If you are not
+yet sure the architecture is what you want, read [Core concepts](docs/core-concepts.md) first.
 
 An AI assistant is recommended for this guide: it can inspect your live OS, reconcile changing CLI syntax, turn decisions into a phased plan, apply most configuration, and answer questions as they arise. Run a locally installed coding/operations agent rather than relying on a browser-only chat so it can inspect files, make implementation changes, and execute verification on the host. [Claude Code](https://github.com/anthropics/claude-code) and [Codex](https://github.com/openai/codex) are suitable examples. Local access does not replace your review or approval.
 
@@ -166,13 +203,32 @@ flowchart LR
     H --> Backup[External backup + dead-man checks]
 ```
 
-The diagram shows logical roles. Hermes can run one gateway process per profile—the upstream default—or multiplex selected profiles through one gateway. Start with separate processes unless process density is a real constraint.
+The diagram shows logical roles, not required software. **For your first milestone you need
+only the top-left path** — you, a private surface, one Hermes profile, and a model provider —
+plus somewhere to back up. Treat every other box as optional and add it later, with the
+boundary that makes it safe:
+
+```mermaid
+flowchart LR
+    You[You] --> CLI[Private CLI or chat]
+    CLI --> P[One Hermes profile]
+    P --> Prov[Model provider]
+    P --> B[Off-host backup]
+```
+
+[Core concepts](docs/core-concepts.md) walks one request through that minimum path. Hermes can
+run one gateway process per profile—the upstream default—or multiplex selected profiles through
+one gateway. Start with separate processes unless process density is a real constraint.
 
 ## Reading order
 
 ### Core private stack
 
 Complete this path before adding autonomous schedules, public ingress, local inference, or a cross-harness broker.
+
+**Step 0 — before any of it:** if you have not used a system like this, spend 30 minutes on
+[Try it safely](docs/safe-sandbox.md) in a disposable VM. It costs nothing to delete, and it
+makes every page below concrete instead of abstract.
 
 | Step | Document | Outcome |
 |---|---|---|
@@ -206,6 +262,9 @@ link each installed copy from the knowledge-base navigation, and revise it aroun
 owners, paths, controls, and field evidence.
 
 - [Proposed wiki structure](docs/knowledge-base-structure.md)
+- [Core concepts and one worked example](docs/core-concepts.md)
+- [Glossary](docs/glossary.md)
+- [Try it safely (disposable evaluation)](docs/safe-sandbox.md)
 - [Compatibility ledger](docs/compatibility.md)
 - [Sources](docs/sources.md)
 - [Template library and usage guide](templates/README.md)

@@ -1,5 +1,8 @@
 # Suggested scheduled jobs
 
+> **Scope:** optional extension. Nothing here is needed until you want work to happen without
+> you present.
+
 Schedules are optional operating aids, not a reason to make the stack autonomous. Add a job only when it has an owner, an observable outcome, a bounded failure mode, and a destination someone reads.
 
 Use the installed `hermes cron --help` and subcommand help before creating anything. Hermes changes faster than this guide, and exact command flags are intentionally not duplicated here.

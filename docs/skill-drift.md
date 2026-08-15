@@ -1,5 +1,8 @@
 # Runbook — Detect and reconcile skill drift
 
+> **Scope:** a reconciliation runbook for an established deployment. Not needed for a first
+> build or a [disposable trial](safe-sandbox.md).
+
 Use this runbook when a skill source changes, a harness upgrade changes discovery, an expected skill is missing, a name resolves to the wrong source, or selection behavior changes. Record deployment-specific paths and identities in a private copy, not in this public guide.
 
 ## Scope and authority

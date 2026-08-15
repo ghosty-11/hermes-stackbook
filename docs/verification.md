@@ -1,5 +1,11 @@
 # Verification
 
+> **Minimum proof for a first trial.** Before the layered material below, four checks tell you
+> whether the thing works at all: the built-in diagnostic reports no blocking problem; you ask
+> a private question and get a reply; a sender who is not authorised cannot make it act; and
+> you restore one file from backup and it matches. Everything after that matters once the stack
+> runs unattended or faces anyone but you.
+
 Configuration is an intention. Verification exercises the real profile, surface, dependency, and failure path.
 
 Keep a private verification record with date, installed revisions, commands, exit codes, and evidence locations. Do not copy secrets or private identifiers into this repository.

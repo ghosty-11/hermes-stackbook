@@ -1,5 +1,9 @@
 # Operations
 
+> **Scope:** read this when the stack will run unattended. Evaluating in a
+> [disposable VM](safe-sandbox.md), or running one private profile with no schedules? You need
+> only the backup section and the gateway check — the rest is not a prerequisite.
+
 A working chat reply is not an operated service. The stack is ready for unattended use only when its health, spend, backups, updates, and failure recovery are observable.
 
 ## Daily operating view

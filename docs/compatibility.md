@@ -1,5 +1,9 @@
 # Compatibility ledger
 
+> **Skip this while evaluating.** It records what the guide was checked against, not steps you
+> perform. In the table below, *runtime smoke* means the author exercised that behaviour on a
+> real host — it does not mean every clean installation has been tested.
+
 This ledger records what the guide was checked against. Readers do not need to reproduce or complete it to deploy the stack; it exists to track the guide's review boundary and verify compatibility claims over time. It is evidence scope, not a promise that every combination works.
 
 ## Evidence levels

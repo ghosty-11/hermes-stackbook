@@ -1,5 +1,8 @@
 # Runbook — Detect and reconcile extension and file drift
 
+> **Scope:** a reconciliation runbook for an established deployment. Not needed for a first
+> build or a [disposable trial](safe-sandbox.md).
+
 Use this runbook when an extension, plugin, hook, profile, generated file, service unit, or other deployed artifact may differ from its canonical source or from what a running consumer loaded. Record real paths, identities, and service names only in a private deployment copy.
 
 ## Scope and authority
