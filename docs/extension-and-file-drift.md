@@ -25,6 +25,32 @@ Use this runbook when an extension, plugin, hook, profile, generated file, servi
 
 A matching source and destination hash does not prove a running process loaded that file. A different hash is not drift when the destination contains documented generated or environment-specific fields.
 
+### Worked example: an enabled extension that does not exist
+
+The layer most often skipped is loader policy against loaded runtime, because a configuration
+file that lists an extension reads as proof the extension is there. It is not.
+
+On the reference deployment, three profiles listed an extension in their enablement array that
+resolved to nothing: no directory, no manifest, no code anywhere on the host. The gateway
+ignored the unknown name in silence — no warning, no startup error, no degraded mode. The
+configuration asserted a capability for weeks; the resolved plugin inventory for those profiles
+returned one fewer entry than the configuration listed, and only comparing the two revealed it.
+
+Nothing was broken, which is exactly why it survived: the failure of an enablement entry that
+resolves to nothing is indistinguishable from an entry that was never needed. But the same
+silence covers the case that does matter — a renamed, moved, or half-removed extension a
+profile still believes it has.
+
+The invariant worth asserting is therefore not "the entry is present" but **every name in an
+enablement list resolves to a discoverable extension, on the profile that lists it**. Compare
+the configured list against the loader's own resolved inventory, per profile, and treat a name
+present in one and absent from the other as drift in both directions:
+
+- configured but unresolved — a stale entry, a typo, or an extension removed without
+  un-enabling it;
+- resolved but unconfigured — an extension loading through precedence or a bundled default
+  nobody chose.
+
 ## Detection contract
 
 Choose the narrowest stable invariant:

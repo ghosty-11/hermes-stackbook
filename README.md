@@ -249,7 +249,7 @@ Add only the module with a named consumer and acceptance scenario:
 
 | Document | Extension |
 |---|---|
-| [Hermes–OMP broker](https://github.com/ghosty-11/hermes-omp-broker) | Add a typed, allowlisted, cancellable coding broker with its own specification, schema, skill, and acceptance suite. |
+| [Released packages](#released-packages) | Add a first-party package — coding broker, cross-harness mailbox, tool-exposed memory, public-chat ambient presence, or per-session tracing — each with its own specification and tests. |
 | [Skills and plugins](docs/skills-and-plugins.md) | Curate official and community extensions. |
 | [Suggested scheduled jobs](docs/scheduled-jobs.md) | Add owned, observable, silent-when-healthy scheduled work. |
 | [Supporting services](docs/supporting-services.md) | Add quarantined research, page extraction, or local inference. |
@@ -312,7 +312,25 @@ Questions, corrections, compatibility reports, and architecture reviews are welc
 
 If you want private contact, open an issue containing an email address you are comfortable making public; I may contact you when I get around to it. Do not put the private subject, credentials, logs, or sensitive personal information in the issue.
 
-Supporting packages are separate dependencies: [hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker) provides the optional coding boundary, and [hermes-mailbox](https://github.com/ghosty-11/hermes-mailbox) provides optional cross-harness message transport. Review, pin, and test only the packages your workload selects.
+## Released packages
+
+Optional capabilities ship as separate, independently versioned repositories rather than as
+guide text. Each is first-party to this project and enabled in the reference deployment.
+Review, pin, and test only the packages your workload selects; none of them is required for
+the core private stack.
+
+| Package | Adds | Boundary that makes it safe to have |
+|---|---|---|
+| [hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker) | Typed, allowlisted, cancellable Hermes-to-OMP coding delegation, with its own specification, schema, skill, and acceptance suite. | Repository choice belongs to server-side policy, not to the requesting agent. |
+| [hermes-mailbox](https://github.com/ghosty-11/hermes-mailbox) | Cross-harness message transport with harness adapters, record schemas, a skill, and replay tests. | Messages carry information, never authority. It is not a task ledger. |
+| [hermes-optmem-tools](https://github.com/ghosty-11/hermes-optmem-tools) | Append-only agent memory exposed as registered tools, so a profile gets persistent memory without a terminal toolset. | Fixed argument vector and a per-profile memory directory; the model supplies no command, path, or executable. |
+| [hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient) | Optional ambient presence for a public chat profile, so it can sometimes join a conversation instead of only answering mentions. | Admission is an adapter decision. A prompt cannot reliably decide whether a gateway creates an inference turn. |
+| [hermes-trace](https://github.com/ghosty-11/hermes-trace) | Per-session evidence of what an agent did: which skills were exposed and never activated, tool calls, API cost and duration, as bounded append-only events plus a compact per-session card. | Observer only. Every handler returns nothing, so it cannot gate a turn; it makes no network calls and caps its own disk footprint. |
+
+Publication of a package is not a security endorsement of your configuration of it. Apply the
+review in [Skills and plugins](docs/skills-and-plugins.md) that you would apply to any
+third-party extension: read the entry point, check what it registers, pin a full commit, and
+enable it only on the profile that consumes it.
 
 ## Planned work
 

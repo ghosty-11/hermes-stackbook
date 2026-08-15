@@ -52,7 +52,15 @@ Reviewed 2026-08-14. Prefer official documentation and source repositories for b
 - [0xNyk/awesome-hermes-agent](https://github.com/0xNyk/awesome-hermes-agent) — broad independent ecosystem directory and operational resources.
 - [42-evey/hermes-plugins](https://github.com/42-evey/hermes-plugins) — community plugin implementations and design patterns.
 - [42-evey/vigilguard](https://github.com/42-evey/vigilguard) — config/intent guard reference.
-- [ghosty-11/hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient) — optional public-chat ambient-presence adapter referenced as a concrete implementation; review its current release and upstream seam before use.
+
+First-party packages from this project, listed here so their provenance is explicit rather than
+implied: [ghosty-11/hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker),
+[ghosty-11/hermes-mailbox](https://github.com/ghosty-11/hermes-mailbox),
+[ghosty-11/hermes-optmem-tools](https://github.com/ghosty-11/hermes-optmem-tools),
+[ghosty-11/hermes-trace](https://github.com/ghosty-11/hermes-trace) and
+[ghosty-11/hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient).
+Each carries its own tests and documentation; review the current release and the upstream seam
+it depends on before use.
 
 ## Free endpoint and developer-program starting points
 

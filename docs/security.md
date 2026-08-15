@@ -125,7 +125,7 @@ An optional public bot receives:
 - authenticated platform identity in the prompt/tool context;
 - no route to private profiles based solely on message text.
 
-If adding ambient “sometimes respond” behavior to the optional public bot, admission is an adapter decision. A model prompt cannot reliably control whether a gateway creates an inference turn. [ghosty-11/hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient) is one public implementation to review.
+If adding ambient “sometimes respond” behavior to the optional public bot, admission is an adapter decision. A model prompt cannot reliably control whether a gateway creates an inference turn. [hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient) is this project's own implementation of that admission boundary and runs on the reference deployment's public profile; review it as you would any adapter that decides whether an untrusted message becomes a turn.
 
 ## Scheduled work
 
