@@ -21,12 +21,13 @@ A quick way to tell which you want:
 | "Summarise this document and post it to me each morning" | Hermes |
 | "Answer questions privately, over days, remembering context" | Hermes |
 | "Watch for a condition and tell me only when it matters" | Hermes (a scheduled job) |
-| "Change this code, run the tests, show me the diff" | OMP (or Hermes alone, for light work) |
-| "Refactor across a repository with language tooling and a debugger" | OMP |
+| "Change this code, run the tests, show me the diff" | Either — Hermes does this with its own tools |
+| "Work across a repository all day with language tooling, a debugger, and sessions" | OMP |
 
-Hermes can also write and run code through its own tools, so **light coding does not require
-OMP**. Add OMP when software engineering is a main workload and you want a harness built for
-it.
+Hermes writes and runs code through its own terminal and file tools, so **coding does not
+require OMP**. Add OMP when software engineering is a large enough share of your work to want a
+harness built for it — repository workflow, structured editing, LSP, debugger, browser,
+sessions, and delegation — not because Hermes cannot code.
 
 ## Following one request end to end
 

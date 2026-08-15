@@ -24,7 +24,8 @@ conversation over days, run something on a timer, remember context, and reach yo
 command line or a chat app. A **profile** is one separately configured assistant — its own
 settings, memory, credentials, and allowed tools. **OMP** is optional separate software for
 software engineering: point it at a repository and it edits code, runs tests, and uses a
-debugger. You do not need it to start, and Hermes can do light coding on its own.
+debugger. You do not need it to start — Hermes writes and runs code itself; OMP adds a harness
+built around repositories, language tooling, and a debugger.
 
 The smallest useful result is **one private assistant, one model provider, no automation** —
 reachable only by you. Everything else in this guide is a capability you add later, together
@@ -62,7 +63,7 @@ Start with the capabilities you need; the full stack is not required. Common use
 - browser-assisted data collection and other bounded multi-step automations;
 - multiple capability-separated profiles for private operations, research, auditing, and optional public interaction.
 
-Hermes can write and run code through its own terminal and tool surfaces, so OMP is not required for light or occasional coding. Add OMP when software engineering is a major workload and you want its integrated repository workflow, structured editing, LSP, debugger, browser, session, and delegation features.
+Hermes writes and runs code through its own terminal and tool surfaces, so coding does not require OMP. Add OMP when software engineering is a large enough share of the work to want a harness built for it: integrated repository workflow, structured editing, LSP, debugger, browser, session, and delegation features.
 
 The software can operate cheaply, and an existing host plus free model/provider tiers can make the recurring cost effectively zero. Free offerings, quotas, and terms change, and local inference still has hardware and electricity costs. Free and inexpensive models can produce useful results on well-scoped tasks; stronger paid models generally improve reliability and output quality for difficult reasoning, coding, research synthesis, and media generation. Route routine work to economical models and reserve paid models for tasks where the quality difference matters.
 

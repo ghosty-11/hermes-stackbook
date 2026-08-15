@@ -2,7 +2,7 @@
 
 ## The split
 
-Hermes and OMP solve different operating problems, but OMP is optional. Hermes is capable of coding through its terminal and tool surfaces. Use Hermes alone for lighter or occasional coding; add OMP when software engineering is important enough to justify a dedicated harness with integrated repository, LSP, debugger, browser, structured-editing, session, and delegation workflows.
+Hermes and OMP solve different operating problems, but OMP is optional. Hermes codes through its terminal and tool surfaces. Add OMP when software engineering is a large enough share of the work to justify a dedicated harness with integrated repository, LSP, debugger, browser, structured-editing, session, and delegation workflows — the difference is the tooling around the work, not whether Hermes can do it.
 
 | Concern | Hermes | OMP |
 |---|---|---|
