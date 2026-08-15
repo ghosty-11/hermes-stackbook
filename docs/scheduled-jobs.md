@@ -12,6 +12,17 @@ Use the installed `hermes cron --help` and subcommand help before creating anyth
 
 Healthy no-agent jobs should produce no output. Agent jobs should use Hermes' supported silence sentinel. Deliver findings to an explicit platform and channel; never rely on a bare platform default.
 
+Two deliberate exceptions to silent-when-healthy, each still requiring an owner, a named
+consumer, and an observable failure path:
+
+- **Consumer-facing heartbeat/content jobs** (a daily briefing, a standing status post):
+  their output *is* the product, and their **silence is the alert** — pair them with a
+  check that notices a missed delivery.
+- **Bounded collector-to-reviewer handoffs**: a quarantined collector may deliver to a
+  local/internal destination that a privileged reviewer consumes across a trust boundary,
+  instead of to a human channel. The destination is still explicit; "local" is a handoff,
+  never a place for alerts.
+
 ## Starter schedule
 
 These are examples, not universal defaults. Set an explicit timezone, offset neighboring jobs, and avoid known production or backup windows.

@@ -115,7 +115,7 @@ hermes config set gateway.multiplex_profiles true
 
 Set an explicit `gateway.multiplex_profile_allowlist` in `config.yaml`, then restart only after reviewing the official [multiplexing contract](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways). Do not run secondary gateway services for profiles served by the multiplexer.
 
-Test per-profile model, `.env`, memory, skill, cron, and platform resolution. A shared process reduces service count; it does not reduce the need for profile-by-profile verification.
+Test per-profile model, `.env`, memory, skill, cron, and platform resolution. A shared process reduces service count; it does not reduce the need for profile-by-profile verification. Under multiplexing, live sessions for every served profile persist in the serving profile's state database (tagged by profile name), not in each profile's own state file — see [Architecture](architecture.md#data-plane).
 
 ## Model routing
 

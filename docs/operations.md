@@ -45,6 +45,15 @@ Requirements:
 
 Process alive is not gateway healthy. The acceptance path is authorized inbound message → correct profile → model/tool action → outbound delivery.
 
+### Independent operator control plane
+
+Optional pattern: a minimal deterministic poller (its own service/timer, not part of the
+agent service group) that watches an operator-controlled surface — for example message
+reactions — and executes a small allowlisted action set: pause a job, restart the gateway,
+run the guard. Its value is exactly its independence: it keeps working when the thing it
+controls is down, so keep it free of model calls, agent state, and shared credentials, and
+let it stop the workload without depending on it.
+
 ## Cron design
 
 Choose the narrowest execution mode:

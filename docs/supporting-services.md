@@ -71,7 +71,10 @@ Project: [ollama/ollama](https://github.com/ollama/ollama)
 Operational rules:
 
 - loopback bind only;
-- one intentionally selected model, not a model zoo;
+- one intentionally selected **loaded** model — enforce a single loaded model and single
+  parallel request on memory-constrained hosts. A small on-disk inventory of alternates
+  (a fallback tier, an emergency small model) is compatible with this rule; a zoo of
+  routinely served models is not;
 - cap concurrent requests on memory-constrained hosts;
 - pin context and batch settings based on measurement;
 - place the local lane last in fallback chains;
@@ -144,6 +147,19 @@ A backup job passes only after:
 5. restored content matches the source or a recorded checksum;
 6. temporary restore data is removed;
 7. failure or staleness is reported by an external monitor.
+
+Field principles that earned their place:
+
+- **The backup plane must survive the agent plane.** Supervise the backup as its own
+  service/timer, not as part of the agent service group — stopping or crashing the agents
+  must not cancel the backup.
+- **Stage live databases consistently.** Copy SQLite through its online-backup API (and
+  dump PostgreSQL logically) into a staging directory that the snapshot then captures;
+  never snapshot raw live database files with their write-ahead logs. Refuse the snapshot
+  when staging fails, loudly.
+- **Expose a narrow non-secret status projection** (for example, last local and last
+  off-host success timestamps in a world-readable file) so monitors and dashboards can
+  assert freshness without reading the repository or its credentials.
 
 ## Sync and dashboards
 
