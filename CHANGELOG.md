@@ -16,9 +16,15 @@ than the older row being rewritten.
   actually exercised after the restart: per-profile plugin inventory unchanged, cron scheduling
   across every multiplexed profile, both chat identities reconnected, and a profile-scoped
   platform adapter observed doing something only it does.
-- The row also records what was **not** done — the full upstream suite was cut short when
-  concurrent suites exhausted host memory, and no full delegation ran through the rebuilt
-  broker client. An evidence row that hides its gaps is worth less than one that names them.
+- The suite evidence is a slice-and-compare, not a single run: 34k collected tests do not fit
+  this host in one process, so slices ran one at a time and every failing area was re-run
+  against the exact merged upstream commit in a control worktree. 31,875 passed, 279 failed,
+  and the failure sets match the control area for area — which is the claim that matters, since
+  a raw failure count says nothing about who caused it.
+- The row still records what was **not** measured: no full delegation ran through the rebuilt
+  broker client, and one `tests/tools` chunk hangs when its files share a process — on the
+  control as well — leaving ~1,500 tests unrun. An evidence row that hides its gaps is worth
+  less than one that names them.
 
 ## 1.6.0 — 2026-08-16
 
