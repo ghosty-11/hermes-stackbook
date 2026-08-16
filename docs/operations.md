@@ -228,10 +228,18 @@ the Stackbook source revision for provenance and revise the copy after field use
 ### Credential exposure
 
 - Disable affected ingress/job/plugin.
+- Treat a value that reached an agent context, a model provider, a transcript or a log as
+  **exposed off-host**, not merely mishandled locally. Redaction that did not fire is not
+  containment, and "it never left the machine" is a claim to verify rather than assume.
 - Rotate provider, bot, broker, and source-control credentials in the relevant scope.
-- Invalidate cached snapshots/sessions as required.
+- Rotating the [secret store](secret-store.md) key is not a substitute for rotating an exposed
+  credential: removing a recipient does not reach history, backups, or a value already read.
+- Invalidate cached snapshots/sessions as required. Long-running consumers often cache a resolved
+  secret for the process lifetime, so identify what must restart before the rotation is real.
 - Search logs and history for propagation.
 - Restore service with a fresh credential and a real end-to-end check.
+- Record whether the exposure met your written rotation triggers. If it did not, the triggers have
+  a gap — accidental disclosure is a distinct case from abuse or scheduled rotation.
 
 ## Maintenance cadence
 

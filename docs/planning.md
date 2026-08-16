@@ -41,6 +41,11 @@ Use separate identities where their authority differs:
 
 A Hermes profile has a separate `.env`, but a profile is not an operating-system security boundary. On the local terminal backend, profiles under one OS user can reach that user's files. Use separate OS users, Docker/another isolated backend, file permissions, or a service boundary when that matters.
 
+This table is also the unit of separation for a [central secret store](secret-store.md): give each
+identity its own encrypted file and its own key, so consolidating credentials does not quietly let
+one identity decrypt another's. Deciding the store early is cheaper than migrating scattered
+credential files later.
+
 ## Provider plan
 
 For each role, record:

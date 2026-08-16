@@ -71,10 +71,18 @@ Do not use `--yolo` or approvals-off on a host-reaching backend. A container bou
 
 ## Secrets
 
-- Put Hermes secrets in its supported secret store or profile `.env`, mode-restricted.
+- Prefer a **central secret store** over per-component credential files once more than one
+  component holds credentials — one rotation point, one backup, no plaintext at rest. Keep a
+  separate encrypted file per consuming identity so one harness cannot decrypt another's secrets.
+  Design, requirements and migration: [Central secret store](secret-store.md).
+- A store is credential hygiene, not a boundary. Whatever unlocks it is readable by the identity
+  the harness runs as, so an agent running as that identity can read it too.
+- Until a store is adopted, put Hermes secrets in its supported secret store or profile `.env`,
+  mode-restricted — and apply the same mode to every backup copy. A hand-made `.env.bak` inherits
+  the umask, not the original's permissions.
 - Keep bot tokens per profile and reject duplicate tokens where the gateway enforces it.
 - Keep OMP auth broker/gateway bearer files private and rotate them after suspected exposure.
-- Prefer an external secret backend when operationally justified; do not place secrets in config examples, Git, wiki, task bodies, or logs.
+- Do not place secrets in config examples, Git, wiki, task bodies, or logs.
 - Pass only named environment variables to sandboxes and MCP servers.
 - Do not let an agent print environment listings as diagnostics.
 - Redact secret values before storing execution evidence.

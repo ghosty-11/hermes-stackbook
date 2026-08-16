@@ -7,6 +7,45 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.5.0 — 2026-08-16
+
+Adds the credential-storage guidance the guide never had, and removes two ecosystem entries
+that a source review found do not do what their one-line descriptions implied. Both changes
+come from evaluating a central credential store for the reference deployment and rejecting
+every off-the-shelf candidate.
+
+- **New:** [Central secret store](docs/secret-store.md) — when to consolidate credentials, and
+  what a store is actually worth. It buys one rotation point, one revocation point, no plaintext
+  at rest and one thing to back up. It is **not** a boundary: whatever unlocks the store is
+  readable by the identity the harness runs as, so an agent running as that identity can read it
+  too. The page says so plainly, because claiming otherwise is the common failure.
+- The design requirement that is easy to get backwards: **one encrypted file per consuming
+  identity, not one shared ciphertext**. Where two harnesses run as OS users that cannot read
+  each other's credentials today, a single blob readable by both is a regression in blast radius
+  disguised as consolidation. Verify the isolation rather than assume it.
+- Requirements are derived from the delivery contracts a harness already imposes — a complete
+  `KEY=VALUE` map from one invocation for a bulk seam, one value per field for a per-field seam,
+  both under fixed timeouts, non-interactive after reboot — rather than from any product's
+  feature list.
+- Includes a worked example, migration order, rotation, and a verification checklist. Migration
+  leads with inventorying **every** reader, because service units with an environment-file
+  directive, helper scripts parsing credential files directly, and inline passwords in container
+  definitions all keep live copies that make "rotate once" false.
+- Security: the Secrets section now recommends a store first, and notes that a hand-made
+  `.env.bak` inherits the umask rather than the original's mode.
+- Operations: the credential-exposure playbook now treats a value that reached an agent context,
+  a model provider or a transcript as exposed **off-host**, and states that rotating a store key
+  is not a substitute for rotating the credential — removing a recipient reaches neither history,
+  backups, nor a value already read.
+- Planning, build sequence and backups gain the matching decision points; backups call out that
+  the store's key material must be kept separately from the store's ciphertext.
+- **Removed:** two entries from the ecosystem candidate list. One was described as a local
+  credential broker, but its raw credential-returning routes are registered unconditionally with
+  no flag to disable them and its own ADR defers per-agent filtering to a policy layer that does
+  not exist. The other is a configuration UI for an agent framework's own container terminal
+  backend rather than an access-control system. Listing either invited readers to install
+  software this project evaluated and rejected.
+
 ## 1.4.0 — 2026-08-16
 
 Releases the last unfilled item on the architecture document's own custom-work list, so it is
