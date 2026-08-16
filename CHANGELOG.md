@@ -7,6 +7,19 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.6.1 — 2026-08-16
+
+Ledger-only release: the field deployment advanced, so its evidence row advanced with it rather
+than the older row being rewritten.
+
+- New compatibility row for a 204-commit framework advance and OMP `17.3.5`, recording what was
+  actually exercised after the restart: per-profile plugin inventory unchanged, cron scheduling
+  across every multiplexed profile, both chat identities reconnected, and a profile-scoped
+  platform adapter observed doing something only it does.
+- The row also records what was **not** done — the full upstream suite was cut short when
+  concurrent suites exhausted host memory, and no full delegation ran through the rebuilt
+  broker client. An evidence row that hides its gaps is worth less than one that names them.
+
 ## 1.6.0 — 2026-08-16
 
 Corrects the secret-store design on a point that field use found the hard way: separate encrypted
