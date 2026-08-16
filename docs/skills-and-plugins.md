@@ -52,6 +52,20 @@ Useful ecosystem projects to evaluate when the matching need exists:
 
 These are candidates, not a recommended bundle. Read source, release history, issue state, install scripts, permissions, network destinations, and license before use.
 
+### First-party packages from this project
+
+These are this guide's own released plugins, each running in the reference deployment. They
+are listed here so the review procedure below applies to them exactly as it applies to any
+third-party extension — being first-party is provenance, not an exemption.
+
+| Package | Category | Read this before enabling it |
+|---|---|---|
+| [hermes-optmem-tools](https://github.com/ghosty-11/hermes-optmem-tools) | Registered memory tools | Wraps the upstream OptMem store listed above. It exists so a profile can hold persistent memory *without* a terminal toolset; the model never supplies a command, path, or executable. Profiles with no memory directory configured never see the tools. |
+| [hermes-mailbox](https://github.com/ghosty-11/hermes-mailbox) | Cross-harness transport | Message bodies are information, not authority. Grant it to a profile only when a task ledger alone cannot deliver the work. |
+| [hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker) | Coding delegation | Registers one narrow tool whose repository argument is validated against server-side policy. Its broker runs as a separate identity from the agent that calls it. |
+| [hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient) | Platform adapter | Replaces a bundled platform adapter, so it must be enabled in the profile that owns that adapter — enabling it at the root profile does not cover a multiplexed profile's own adapter scope. |
+| [hermes-trace](https://github.com/ghosty-11/hermes-trace) | Observer hooks | Registers no tools and returns nothing from every handler, so it cannot influence a turn. Read what a trace file contains before enabling it: tool names, clipped tool arguments and results, model names and skill names make trace output as sensitive as the conversations it observes. |
+
 ## Minimal Hermes skill set
 
 A private orchestrator or engineer usually benefits from:

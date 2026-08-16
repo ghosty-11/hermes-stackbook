@@ -210,6 +210,36 @@ class DocumentationChecksTest(unittest.TestCase):
             self.assertIn(heading, checklist)
         self.assertIn("selected and enabled modules", sequence)
 
+    def test_every_released_package_is_indexed_and_reviewable(self) -> None:
+        """A released package the guide never names is a coverage gap, not a secret.
+
+        One package was public for a day before any document mentioned it, because the
+        package list lived in prose that nobody had to update. The index and the review
+        section are both asserted so provenance and procedure cannot drift apart.
+        """
+        root = Path(__file__).resolve().parents[1]
+        readme = (root / "README.md").read_text()
+        plugins = (root / "docs" / "skills-and-plugins.md").read_text()
+        sources = (root / "docs" / "sources.md").read_text()
+        packages = (
+            "hermes-omp-broker",
+            "hermes-mailbox",
+            "hermes-optmem-tools",
+            "hermes-discord-ambient",
+            "hermes-trace",
+        )
+        self.assertIn("## Released packages", readme)
+        for package in packages:
+            url = f"https://github.com/ghosty-11/{package}"
+            self.assertIn(url, readme, f"{package} is absent from the README index")
+            self.assertIn(url, plugins, f"{package} escapes the plugin review section")
+            self.assertIn(url, sources, f"{package} has no recorded provenance")
+
+        # First-party provenance must be stated, not implied by the account name.
+        self.assertIn("First-party packages from this project", sources)
+        self.assertIn("being first-party is provenance, not an exemption", plugins)
+        self.assertNotIn("is one public implementation to review", readme)
+
     def test_self_improvement_is_evidence_backed_and_operator_gated(self) -> None:
         root = Path(__file__).resolve().parents[1]
         readme = (root / "README.md").read_text()

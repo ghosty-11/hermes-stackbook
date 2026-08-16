@@ -7,6 +7,37 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.3.0 — 2026-08-16
+
+New released package, plus a package-coverage correction. An audit of the reference deployment
+against this guide found two already-released packages the guide either never named or framed as
+somebody else's work, so a reader could not tell what this project actually ships. No security
+posture changed; the gap was provenance and index coverage.
+
+- **New package:** [hermes-trace](https://github.com/ghosty-11/hermes-trace) — per-session
+  evidence of what an agent did: which skills were exposed and never activated, tool calls, API
+  cost and duration, as bounded append-only events plus a compact card per session. It observes
+  only: every handler returns nothing, so it cannot gate a turn. Documented under the same
+  review procedure as any third-party plugin, because its output is as sensitive as the
+  conversations it records.
+- **New:** README [Released packages](README.md#released-packages) — a single index of the five
+  first-party packages with what each adds and the boundary that makes it safe to have. It
+  replaces the two-package sentence that had to be edited by hand for every release and was not.
+- Skills and plugins: a first-party packages section placing all five inside the same plugin
+  review procedure as any third-party extension, stating outright that being first-party is
+  provenance and not an exemption. `hermes-optmem-tools` is documented for the first time; only
+  the upstream memory store it wraps had been listed.
+- Security and Sources: the ambient public-chat adapter is now identified as this project's own
+  implementation running on the reference deployment's public profile, rather than "one public
+  implementation to review". Sources gained an explicit first-party provenance paragraph.
+- Extension and file drift: a worked example for the layer readers skip — loader policy against
+  loaded runtime. Three profiles listed an extension that resolved to nothing on the host and
+  the gateway ignored the unknown name in silence, so the configuration asserted a capability
+  for weeks. The invariant is that every name in an enablement list resolves to a discoverable
+  extension on the profile that lists it, checked in both directions.
+- Tests: a released-package coverage assertion, so a package published without documentation
+  fails CI instead of going unmentioned. Watched failing before it was made to pass.
+
 ## 1.2.0 — 2026-08-15
 
 Newcomer on-ramp, prompted by first-impression feedback from a technical reader who found the
