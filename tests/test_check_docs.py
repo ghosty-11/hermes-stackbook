@@ -227,6 +227,7 @@ class DocumentationChecksTest(unittest.TestCase):
             "hermes-optmem-tools",
             "hermes-discord-ambient",
             "hermes-trace",
+            "hermes-web-research",
         )
         self.assertIn("## Released packages", readme)
         for package in packages:

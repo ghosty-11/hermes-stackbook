@@ -65,6 +65,7 @@ third-party extension — being first-party is provenance, not an exemption.
 | [hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker) | Coding delegation | Registers one narrow tool whose repository argument is validated against server-side policy. Its broker runs as a separate identity from the agent that calls it. |
 | [hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient) | Platform adapter | Replaces a bundled platform adapter, so it must be enabled in the profile that owns that adapter — enabling it at the root profile does not cover a multiplexed profile's own adapter scope. |
 | [hermes-trace](https://github.com/ghosty-11/hermes-trace) | Observer hooks | Registers no tools and returns nothing from every handler, so it cannot influence a turn. Read what a trace file contains before enabling it: tool names, clipped tool arguments and results, model names and skill names make trace output as sensitive as the conversations it observes. |
+| [hermes-web-research](https://github.com/ghosty-11/hermes-web-research) | Delegated tool | The quarantine profile's own tool surface is the blast radius: an injection that owns its turn gets whatever that seat holds. Verify that seat's *resolved* schema per surface before enabling this anywhere — config membership is not resolved capability. Raising the answer or source caps widens exactly the channel the boundary exists to narrow. |
 
 ## Minimal Hermes skill set
 

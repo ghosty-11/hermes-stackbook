@@ -180,7 +180,7 @@ Design for these failures explicitly:
 This is the first iteration of the Stackbook. Additional extensions, supporting modules,
 plugins, and skills are planned; select only gaps exercised by named use cases:
 
-1. a fail-closed web-research hop between capability-separated profiles;
+1. [hermes-web-research](https://github.com/ghosty-11/hermes-web-research) for a fail-closed web-research hop between capability-separated profiles;
 2. [hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker) for typed Hermes-to-OMP coding delegation;
 3. [hermes-mailbox](https://github.com/ghosty-11/hermes-mailbox) for listing-first cross-harness messages when the task ledger alone is insufficient;
 4. policy checks that compare profile charters to resolved tool schemas;

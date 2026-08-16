@@ -7,6 +7,25 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.4.0 — 2026-08-16
+
+Releases the last unfilled item on the architecture document's own custom-work list, so it is
+no longer planned work.
+
+- **New package:** [hermes-web-research](https://github.com/ghosty-11/hermes-web-research) —
+  web access for a privileged profile that holds no web tools. One tool delegates to a
+  quarantined profile in a separate OS process, asks for a single JSON object, and forwards
+  only known fields, each bounded and neutralised. Output that does not parse forwards
+  nothing, and forwarded values cannot impersonate the label that marks them untrusted. It
+  ships a threat model, because a boundary published without one is a claim rather than a
+  control.
+- Architecture: the fail-closed web-research hop moves from "remaining custom work" to a
+  released package. Five items remain on that list.
+- Skills and plugins: the new package's review note names the thing that actually decides its
+  safety — the quarantine seat's own resolved tool surface is the blast radius, and config
+  membership is not resolved capability.
+- Tests: the released-package coverage assertion now covers six packages.
+
 ## 1.3.0 — 2026-08-16
 
 New released package, plus a package-coverage correction. An audit of the reference deployment
