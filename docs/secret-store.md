@@ -80,6 +80,60 @@ features: dynamic short-lived credentials, leases, policy tenancy or a read audi
 some open-core products gate audit logging and rotation behind a paid tier; check the licence of
 the specific features you are adopting, not the repository's headline licence.
 
+## Worked example
+
+One concrete implementation of the design above, using [SOPS](https://github.com/getsops/sops)
+with [age](https://github.com/FiloSottile/age) recipients. Adapt the paths and identity names;
+these are illustrative, not a script to paste. Check current upstream installation instructions
+for your OS — at the time of writing `age` is commonly packaged while `sops` is often a single
+binary from its releases page, so verify the published checksum before installing it.
+
+**One identity per consuming principal.** Generate each as the user that will own it, mode `0600`,
+and keep it out of the store directory:
+
+```bash
+age-keygen -o "$IDENTITY"          # prints the public recipient to stderr
+chmod 600 "$IDENTITY"
+```
+
+**One encrypted file per identity**, encrypted only to that identity's recipient. Use the dotenv
+input/output type so the decrypted form is directly the `KEY=VALUE` map a bulk seam expects:
+
+```bash
+sops encrypt --age "$RECIPIENT_A" --input-type dotenv --output-type dotenv \
+  plain-a.env > store/agent-a.env
+```
+
+**Wire each consumer to its own file.** A bulk seam decrypts the whole file; a per-field seam
+extracts one key:
+
+```bash
+# bulk: complete KEY=VALUE map, one invocation
+SOPS_AGE_KEY_FILE="$IDENTITY_A" sops decrypt store/agent-a.env
+
+# per-field: one value
+SOPS_AGE_KEY_FILE="$IDENTITY_B" sops decrypt --extract '["SOME_KEY"]' store/agent-b.env
+```
+
+**Rotate one value without exposing it in the process list.** `sops set` takes a JSON-encoded
+value, so a bare string is rejected — encode it first:
+
+```bash
+printf '%s' "$NEW_VALUE" | jq -Rs . \
+  | sops set --value-stdin store/agent-b.env '["SOME_KEY"]'
+```
+
+**Change who can decrypt** by editing the recipients in `.sops.yaml`, then re-wrapping the
+existing data key. Add and test the new recipient before removing the old one:
+
+```bash
+sops updatekeys --yes store/agent-b.env
+```
+
+Commit only the encrypted files. The identities never enter the repository, and they must not sit
+inside a backup alongside the ciphertext they open — treat them exactly as you treat the backup
+repository's own password.
+
 ## Migration
 
 Move one credential class at a time and keep the old path working until the new one is proven.
