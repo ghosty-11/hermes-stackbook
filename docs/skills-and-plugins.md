@@ -44,7 +44,6 @@ Useful ecosystem projects to evaluate when the matching need exists:
 - [SkillClaw](https://github.com/AMAP-ML/SkillClaw) — skill evolution/maintenance, only after a real eval corpus exists;
 - [hermes-eval](https://github.com/Saurav0989/hermes-eval) — skill regression and trajectory evaluation;
 - [lintlang](https://github.com/hermes-labs-ai/lintlang) — deterministic instruction/tool-description linting;
-- [custom-dangerous-patterns](https://github.com/scross01/hermes-custom-dangerous-patterns-plugin) — additional command-approval patterns;
 - [OptMem](https://github.com/VictorTaelin/OptMem) — compact append-only memory approach;
 - [VigilGuard](https://github.com/42-evey/vigilguard) — design reference for intent/config checks.
 
