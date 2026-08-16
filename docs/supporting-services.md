@@ -175,7 +175,6 @@ Optional:
 
 - Syncthing for an editable phone/laptop copy of the Markdown knowledge base;
 - Hermes' native web dashboard for profile/config/session administration;
-- [`hermes-workspace`](https://github.com/outsourc-e/hermes-workspace) for a community workspace UI after review;
 - Netdata or another host monitor for CPU, memory, disk, and process health;
 - Langfuse through Hermes' official plugin when trace review has a real owner.
 
