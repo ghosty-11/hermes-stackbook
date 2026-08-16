@@ -7,6 +7,32 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.6.0 — 2026-08-16
+
+Corrects the secret-store design on a point that field use found the hard way: separate encrypted
+files are necessary but not sufficient. Splitting the files controls who can *read*; it does
+nothing about who can *write*.
+
+- **Encryption controls reading; ownership controls writing.** A store configuration lists the
+  **public** recipient of every file, because that is how encryption is targeted. So a principal
+  that can write another principal's file can encrypt values of its own choosing to that file's
+  legitimate recipient, and the victim decrypts them cleanly — credential substitution needing no
+  private key at all. A shared group-writable store directory leaves one principal able to feed
+  another an API key pointing wherever it likes.
+- The design now gives each identity a directory only that identity can write, with a parent that
+  is not group-writable. Reading another's ciphertext stays harmless and may remain permitted
+  where something legitimately needs it, such as committing the repository; writing is the
+  privilege to withhold.
+- Requirements and the verification checklist now cover write refusals as well as read refusals,
+  and warn against trusting a check that passes for a reason you have not confirmed — a command
+  failing for the wrong reason reads exactly like a boundary that holds.
+- **New migration step:** know which seams are additive and which replace. A source that merges
+  without overriding leaves the old path authoritative, so a store outage is harmless and rollback
+  is disabling the source. A configuration field rewritten to call the store is a hard cutover:
+  the old path no longer runs, an unreachable store breaks that consumer, and rollback means
+  editing configuration. Record which is which before relying on "we can always roll back", and
+  note that a consumer failing closed is correct behaviour rather than evidence the store is fine.
+
 ## 1.5.0 — 2026-08-16
 
 Adds the credential-storage guidance the guide never had, and removes two ecosystem entries
