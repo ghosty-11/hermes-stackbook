@@ -57,7 +57,8 @@ First-party packages from this project, listed here so their provenance is expli
 implied: [ghosty-11/hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker),
 [ghosty-11/hermes-mailbox](https://github.com/ghosty-11/hermes-mailbox),
 [ghosty-11/hermes-optmem-tools](https://github.com/ghosty-11/hermes-optmem-tools),
-[ghosty-11/hermes-trace](https://github.com/ghosty-11/hermes-trace) and
+[ghosty-11/hermes-trace](https://github.com/ghosty-11/hermes-trace),
+[ghosty-11/hermes-web-research](https://github.com/ghosty-11/hermes-web-research) and
 [ghosty-11/hermes-discord-ambient](https://github.com/ghosty-11/hermes-discord-ambient).
 Each carries its own tests and documentation; review the current release and the upstream seam
 it depends on before use.
