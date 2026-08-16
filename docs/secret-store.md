@@ -31,9 +31,12 @@ exposes every secret it contains. With an encrypted store, the same accident pro
 A store is only adoptable if it satisfies the delivery contracts the harnesses already impose.
 Establish these against your own installation rather than assuming them.
 
-1. **Per-identity isolation.** If two harnesses run as different OS users that cannot currently
-   read each other's credentials, the store must preserve that. One shared encrypted blob readable
-   by both is a *regression* in blast radius, not a neutral simplification.
+1. **Per-identity isolation, for reads *and* writes.** If two harnesses run as different OS users
+   that cannot currently read each other's credentials, the store must preserve that. One shared
+   encrypted blob readable by both is a *regression* in blast radius, not a neutral
+   simplification. Separate files are only half of it: each identity also needs a directory only
+   it can write, because write access to another's file is enough to substitute credentials
+   (see [Encryption controls reading; ownership controls writing](#encryption-controls-reading-ownership-controls-writing)).
 2. **Native seams, no code changes.** Both harnesses can already shell out for a secret. Hermes has
    a command secret source; OMP resolves configuration values prefixed with `!` by running a
    command and using its stdout. Prefer a store whose CLI fits those seams directly.
@@ -53,24 +56,49 @@ Establish these against your own installation rather than assuming them.
 ## A design that satisfies them
 
 Encrypted files in one repository, one file per consuming identity, each encrypted only to that
-identity's key.
+identity's key — and each in a directory only that identity can write.
 
 ```mermaid
 graph LR
-  subgraph Repo["one repository — backed up, version-controlled"]
-    F1["agent-a.env<br/>encrypted to key A only"]
-    F2["agent-b.env<br/>encrypted to key B only"]
+  subgraph Repo["one repository — parent NOT group-writable"]
+    subgraph DA["dir A — writable by identity A only"]
+      F1["agent-a.env<br/>encrypted to key A"]
+    end
+    subgraph DB["dir B — writable by identity B only"]
+      F2["agent-b.env<br/>encrypted to key B"]
+    end
   end
   F1 -->|"decrypt whole file"| C1["Agent A<br/>bulk KEY=VALUE seam"]
   F2 -->|"extract one key"| C2["Agent B<br/>per-field seam"]
-  K1["key A<br/>readable only by identity A"] -.-> C1
-  K2["key B<br/>readable only by identity B"] -.-> C2
+  K1["key A<br/>readable only by A"] -.-> C1
+  K2["key B<br/>readable only by B"] -.-> C2
 ```
 
 The separation is the point. "Central" means one repository, one rotation procedure and one backup
-— **not** one ciphertext that every consumer can open. Verify the isolation rather than trusting
-it: attempt to decrypt each file with the other identity's key and confirm a non-zero exit and no
-plaintext.
+— **not** one ciphertext that every consumer can open.
+
+### Encryption controls reading; ownership controls writing
+
+Splitting the files is necessary and not sufficient. A store configuration lists the **public**
+recipient for every file, because that is how encryption is targeted. So a principal that can
+*write* another principal's file can encrypt values of its own choosing to that file's legitimate
+recipient — and the victim will decrypt them cleanly, because they are correctly encrypted. That
+is credential substitution, and it needs no private key at all.
+
+A shared, group-writable store directory therefore leaves one principal able to feed another
+arbitrary credentials: an API key pointing at an attacker-controlled endpoint, or simply a value
+that breaks the service. Give each identity its own directory, owned by that identity, and keep
+the parent directory non-group-writable so nobody can add or replace files beside another's.
+
+Reading another principal's ciphertext is harmless — they cannot decrypt it — so a directory may
+stay readable if something legitimately needs it, such as committing the repository. Writing is
+the privilege to withhold.
+
+**Verify both properties rather than trusting them.** Decrypting each file with the other
+identity's key must exit non-zero with no plaintext; creating, replacing or deleting a file in
+another identity's directory must be refused. Test the refusals as the other user, and be
+suspicious of a check that passes for a reason you have not confirmed — a command that fails for
+the wrong reason reads exactly like a boundary that holds.
 
 File-based stores fit this shape well. A daemon-based secret manager also works, but for a small
 static credential set it adds a service, a bootstrap secret to unlock that service, a bearer token
@@ -153,6 +181,14 @@ Move one credential class at a time and keep the old path working until the new 
    should the old copy be removed and the upstream credential rotated.
 5. **Remove the old plaintext.** Command-resolved values are typically held in memory only, but the
    previous files, database rows and backup copies persist until deleted.
+6. **Know which seams are additive and which replace.** They are not equivalent, and the
+   difference decides your rollback. A source that merges into an existing environment without
+   overriding it is *additive*: the old file still wins, a store outage changes nothing, and
+   backing out is disabling the source. A configuration field whose value you rewrite to call the
+   store is a *hard cutover*: the old path no longer executes, an unreachable store breaks
+   credential resolution for that consumer, and backing out means editing configuration. Write
+   down which of your consumers is which **before** you rely on "we can always roll back" — and
+   note that a consumer failing closed is correct behaviour, not evidence the store is fine.
 
 ## Rotation
 
@@ -181,6 +217,8 @@ keys is not a substitute.
 Prove each of these against the live installation, not the documentation:
 
 - each identity can read its own file and **cannot** read the other's;
+- each identity **cannot create, replace or delete** a file in another identity's directory, and
+   the parent directory does not let it add one alongside;
 - the bulk command emits a complete, correctly parsed map within its timeout;
 - the per-key command returns one value within its timeout;
 - values containing `=`, quotes, spaces and escaped newlines survive a round trip unchanged;
