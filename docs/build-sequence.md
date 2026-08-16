@@ -13,7 +13,8 @@ Build:
 
 Exit:
 
-- secrets have named owners and storage locations;
+- secrets have named owners and storage locations, and a decision on whether they go in a
+  [central secret store](secret-store.md) now or move into one later;
 - off-host encrypted backup destination is reachable;
 - operator has an out-of-band host access path;
 - no service is public.

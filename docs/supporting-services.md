@@ -135,6 +135,9 @@ Back up state, not just source code:
 
 - every Hermes profile home: config, auth, memory, skills/plugins, cron, sessions/state needed for recovery;
 - OMP config, sessions needed for continuity, and credential database or broker database;
+- the [central secret store](secret-store.md) repository, if used — and, stored **separately**
+  from it, the key material required to decrypt it. A backup containing only ciphertext is not a
+  recovery path;
 - knowledge repository;
 - custom plugin/skill repositories;
 - service configuration and deployment manifests;

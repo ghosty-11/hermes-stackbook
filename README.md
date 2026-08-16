@@ -253,6 +253,7 @@ Add only the module with a named consumer and acceptance scenario:
 | [Skills and plugins](docs/skills-and-plugins.md) | Curate official and community extensions. |
 | [Suggested scheduled jobs](docs/scheduled-jobs.md) | Add owned, observable, silent-when-healthy scheduled work. |
 | [Supporting services](docs/supporting-services.md) | Add quarantined research, page extraction, or local inference. |
+| [Central secret store](docs/secret-store.md) | Consolidate credentials once more than one component holds them: one rotation point, one backup, per-identity encrypted files. |
 
 Reference material:
 
