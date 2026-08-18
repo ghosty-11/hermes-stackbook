@@ -7,6 +7,24 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.7.0 — 2026-08-18
+
+Adds the loop view of the stack. The guide already described the planes — what exists — and
+every mechanism needed to run them, but never said what repeats, so the improvement loop read
+as a governance procedure rather than as the outermost loop of the system.
+
+- New **Loops in the system** section in [Architecture](docs/architecture.md): four loops that
+  wrap each other, a table mapping each to the chapter that covers it, and the two properties
+  that matter more than the ordering — the check is the load-bearing part of verification, and
+  the improvement loop reaches inside the others, which is why it stays operator-gated.
+- [Verification](docs/verification.md) now names where guards and evals sit in that view, and
+  adds two failure modes that both read as success: a check nobody has seen fail, and a
+  reviewer running inside the context that produced the work.
+- The harness-engineering entry in the [suggested skills roadmap](docs/skills-and-plugins.md)
+  gains layer-first diagnosis and a release gate requiring a proposed change to name its loop.
+- Guidance only: no upstream behavior claim changed, so the
+  [compatibility ledger](docs/compatibility.md) is untouched.
+
 ## 1.6.1 — 2026-08-16
 
 Ledger-only release: the field deployment advanced, so its evidence row advanced with it rather

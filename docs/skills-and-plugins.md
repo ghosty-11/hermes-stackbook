@@ -121,7 +121,7 @@ that can actually perform it.
 | Skill authoring and maintenance | Define triggers, progressive disclosure, source ownership, discovery, collision checks, drift detection, and positive plus nearby-negative selection tests. | A fresh harness process resolves the intended source and the negative prompt does not select it. |
 | Domain modeling and requirements grilling | Sharpen terminology, invariants, decision trees, acceptance boundaries, and architectural decisions before implementation. | The process converges to reviewable decisions without inventing requirements or prolonging resolved questions. |
 | Repository audits and change review | Review complete repository scope, prioritize actionable defects, separate historical evidence from current behavior, and record remediation status. | Coverage is attributable to an immutable revision and every finding has evidence, consequence, and verification. |
-| Harness engineering | Evaluate context cost, tool surfaces, compaction, delegation boundaries, observability, and the smallest honest behavioral eval. | Guidance is verified against at least one real harness seam and does not treat configuration as reachable behavior. |
+| Harness engineering | Locate a failure in the layer that owns it before changing anything, then evaluate context cost, tool surfaces, compaction, delegation boundaries, observability, and the smallest honest behavioral eval. | Guidance is verified against at least one real harness seam, names which loop a proposed change belongs to, and does not treat configuration as reachable behavior. |
 
 This roadmap does not publish or copy private skill bodies. It describes reusable capability
 gaps so readers can build procedures that fit their own harness, authority model, tools, and
