@@ -159,6 +159,25 @@ Every enabled cross-boundary interface should be narrower than free-form chat:
 - **Knowledge handoff:** source, date, confidence/provenance, canonical topic; never raw page text promoted automatically.
 - **Operator notification:** named destination and severity; silence on healthy routine checks.
 
+## Loops in the system
+
+The planes describe what exists. The loops describe what repeats. Four loops wrap each other, and every mechanism this guide covers sits in one of them.
+
+| Loop | What repeats | Where this guide covers it |
+|---|---|---|
+| Agent | A profile calls tools until one request is complete. | [Profiles and models](profiles-and-models.md) |
+| Verification | A check scores the result and returns failures. | [Verification](verification.md), guard checks and evals |
+| Event-driven | A schedule or webhook starts work with no operator present. | [Scheduled jobs](scheduled-jobs.md) |
+| Improvement | Evidence from real runs changes the configuration. | [Verification](verification.md), operator-gated improvement loop |
+
+Two properties matter more than the ordering.
+
+**The check is the load-bearing part of the verification loop.** Generation is cheap and unbounded, so the check is what converts activity into a result you can rely on. A deterministic check beats a model judgment wherever the requirement has a right answer, which is why this guide separates guards from evals instead of treating both as testing.
+
+**The improvement loop reaches inside the others.** Its output is not a report. It is a change to an instruction, a tool description, a threshold, or a rubric that the loops below then use. Because that is a self-modification path, keep it operator-gated: the proposer holds evidence and a recommendation, never the authority to apply, deploy, restart, or spend.
+
+A loop that no component owns does not run. Name the owner of each enabled loop in the deployment checklist, and record an unowned improvement loop as an accepted gap rather than leaving it as an implied capability.
+
 ## Failure model
 
 Design for these failures explicitly:

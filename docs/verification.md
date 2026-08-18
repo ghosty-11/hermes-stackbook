@@ -219,9 +219,11 @@ Do not tune an eval until one favored model passes, use a single lucky run as pr
 
 Keep eval and guard outcomes separate. A good model response does not prove the tool boundary; a correct tool boundary does not prove useful behavior. Example: a guard can prove that a research profile has no shell tool, while an eval tests whether that profile returns a useful, cited answer.
 
+Guards and evals together are the verification loop described in [Architecture](architecture.md). Two failure modes are worth naming because both read as success. A check that cannot be shown failing is not yet a check, so keep a failing fixture for every guard. And a reviewer that runs inside the context that produced the work approves that work: give the check a starting state the generator never touched, whether that means a separate profile, a fresh session, or a deterministic script.
+
 ## Operator-gated improvement loop
 
-A stack can evaluate and improve its own configuration without granting it authority to rewrite itself. Keep evaluation, proposal, approval, application, and verification as separate states:
+This is the improvement loop from [Architecture](architecture.md), and it is the one most deployments never build. A stack can evaluate and improve its own configuration without gaining the authority to rewrite itself, provided evaluation, proposal, approval, application, and verification stay separate states:
 
 1. Deterministic guards, behavioral evals, audits, and compatibility checks collect current evidence.
 2. A read-only reviewer converts material drift, repeated failures, or a useful upstream capability into a bounded proposal.
