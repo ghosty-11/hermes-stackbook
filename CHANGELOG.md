@@ -7,6 +7,22 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## 1.7.1 — 2026-08-18
+
+Removes one candidate from the ecosystem list after reading its source.
+
+- Drops `hermes-eval` from the projects to evaluate in
+  [Skills and plugins](docs/skills-and-plugins.md). It reads as skill regression testing, but
+  its skill check is a substring lint over `SKILL.md` prose that never runs the skill, and its
+  trajectory scorer counts tool calls from a `tool_calls` key that Hermes' own ShareGPT export
+  does not emit — every trajectory therefore scores full marks for tool efficiency. Its
+  completion heuristic also fails any answer containing the word `error`, so it grades a
+  correct debugging run below an agent that did nothing.
+- The entry stated a need that remains real. Static skill assertions still belong in the
+  guide's verification story; nothing here endorses a replacement yet.
+- Guidance only: no upstream behavior claim changed, so the
+  [compatibility ledger](docs/compatibility.md) is untouched.
+
 ## 1.7.0 — 2026-08-18
 
 Adds the loop view of the stack. The guide already described the planes — what exists — and
