@@ -40,7 +40,6 @@ Use both major catalogs; they overlap but organize the ecosystem differently.
 
 Useful ecosystem projects to evaluate when the matching need exists:
 
-- [SkillClaw](https://github.com/AMAP-ML/SkillClaw) — skill evolution/maintenance, only after a real eval corpus exists;
 - [OptMem](https://github.com/VictorTaelin/OptMem) — compact append-only memory approach;
 - [VigilGuard](https://github.com/42-evey/vigilguard) — design reference for intent/config checks.
 
