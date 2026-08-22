@@ -1,0 +1,88 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: documentation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Install locked Node dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Audit Node dependencies
+        run: npm audit --audit-level=high
+
+      - name: Install checksum-verified native tools
+        run: |
+          mkdir -p "$RUNNER_TEMP/hermes-stackbook-bin"
+          scripts/install-ci-tools.sh "$RUNNER_TEMP/hermes-stackbook-bin"
+          echo "$RUNNER_TEMP/hermes-stackbook-bin" >> "$GITHUB_PATH"
+
+      - name: Test documentation contracts
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Check repository documentation
+        run: >-
+          python3 scripts/check_docs.py
+          --max-age-days 120
+          --extract-mermaid "$RUNNER_TEMP/hermes-stack-mermaid"
+
+      - name: Lint Markdown
+        run: npm run lint:markdown
+
+
+      - name: Render Mermaid diagrams
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+        run: |
+          diagrams=("$RUNNER_TEMP/hermes-stack-mermaid"/*.mmd)
+          test -e "${diagrams[0]}"
+          for diagram in "${diagrams[@]}"; do
+            ./node_modules/.bin/mmdc \
+              -i "$diagram" \
+              -o "${diagram%.mmd}.svg"
+          done
+
+      - name: Scan full Git history for secrets
+        run: >-
+          gitleaks git
+          --no-banner
+          --redact
+          --report-format json
+          --report-path "$RUNNER_TEMP/gitleaks.json"
+          .
+
+      - name: Check external links
+        run: >-
+          lychee
+          --root-dir "$GITHUB_WORKSPACE"
+          --no-progress
+          --max-retries 3
+          --accept 200,429
+          '*.md' 'docs/**/*.md' 'templates/**/*.md'

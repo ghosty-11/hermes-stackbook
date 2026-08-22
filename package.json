@@ -1,0 +1,12 @@
+{
+  "name": "hermes-stackbook-ci",
+  "private": true,
+  "scripts": {
+    "lint:markdown": "markdownlint-cli2 \"*.md\" \"docs/**/*.md\" \"templates/**/*.md\" \"tests/**/*.md\""
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "11.16.0",
+    "markdownlint-cli2": "0.23.2",
+    "puppeteer": "25.7.0"
+  }
+}
