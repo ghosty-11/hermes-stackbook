@@ -36,7 +36,7 @@ Run each command's `--help`; output and subcommands evolve.
 
 ## Service supervision
 
-Use Hermes' supported gateway installer for normal systemd/launchd deployments. Use one profile service per process unless multiplexing was selected deliberately.
+Use Hermes' supported gateway installer for normal systemd/launchd deployments. Multiplexing is the gateway's default: the boot preflight folds in live profiles, and a separate per-profile service needs the release's standalone override.
 
 Requirements:
 

@@ -51,24 +51,28 @@ Keep these stores distinct:
 | OMP session/auth state | Coding sessions and provider credentials | Operator-owned OMP process or OMP auth broker. |
 | Backup repository | Recovery data | Backup service only; restore is operator-gated. |
 
-Field caveat: under a **multiplexed** gateway, live conversation sessions for every served
-secondary profile persist in the serving (default) profile's state database, tagged with the
-profile's name; the serving profile's own rows may carry no profile tag at all. Config,
-credentials, skills, memory, and cron still resolve per profile. The secondary profile's own
-state file is not empty — standalone CLI runs against that profile home write into it — so
-querying it returns *different* sessions rather than none, which is worse than an empty
-result because it reads like a complete answer. Probe the serving profile's store, and pair
-any negative result with a control string you know is present.
+Session-store ownership depends on the installed gateway version and topology. A multiplexed
+process does not prove that every profile writes the serving profile's database. Identify the
+store from a live session identifier and a known control message, checking both the serving
+profile and the named profile when necessary. A secondary store can also contain standalone
+command-line sessions. Never infer completeness from an empty query, an existing database or
+the process-wide home directory. Keep profile, speaker and audience authorization separate
+from the storage location.
 
 A wiki edit must never silently become a privileged task. A task body must never be injected into every coding session. List metadata first; open untrusted bodies explicitly.
 
 ## Gateway topology
 
-Hermes supports two valid layouts.
+Select topology against the installed release, not a remembered configuration key.
+The bundled gateway guide inspected on 2026-09-23 defaults to multiplexing after preflight,
+retires `gateway.multiplex_profiles: false` and `gateway.multiplex_profile_allowlist`,
+and serves every live named profile when multiplexing is active.
 
-### One process per profile — recommended starting point
+### Separate processes or deployment roots
 
-Upstream Hermes uses this as the default. Each profile has an independent gateway service, process, credentials, memory footprint, and crash domain.
+Separate processes can provide independent restart and crash domains, but the inspected
+release requires an explicit standalone override for a separate per-profile gateway.
+Follow its installed command help and migration procedure; do not assume the old default.
 
 Use it when:
 
@@ -81,7 +85,7 @@ This is process isolation, not OS-user or filesystem isolation. Profiles using t
 
 ### Multiplexed gateway — density optimization
 
-Set `gateway.multiplex_profiles: true` on the default profile to serve selected profiles through one process. Use `gateway.multiplex_profile_allowlist` rather than implicitly serving every installed profile.
+An explicit `gateway.multiplex_profiles: true` selects multiplexing without the unset-key preflight. It serves every live named profile, not a configurable subset. The retired allowlist is not containment; inventory the served profiles, platforms and scheduled work before changing topology. Archiving or deleting a profile requires separate operator authorization.
 
 Use it when:
 
@@ -98,9 +102,13 @@ Costs:
 - secondary profiles must not bind their own HTTP ports;
 - each polling platform still needs a distinct token per profile unless explicit profile routes share a bot.
 
-A practical compromise is a multiplexed private group plus a separate process for the optional public bot, if enabled.
+If a public companion requires a separate process or operating-system boundary, plan a
+separate deployment deliberately. A profile name alone provides neither boundary.
 
 Official references: [Profiles](https://hermes-agent.nousresearch.com/docs/user-guide/profiles/) and [Running Many Gateways](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways).
+
+Version source: bundled `website/docs/user-guide/multi-profile-gateways.md`, inspected
+2026-09-23, sections on default preflight, standalone override and served-profile enumeration.
 
 ## Trust boundaries
 
@@ -196,8 +204,9 @@ Design for these failures explicitly:
 
 ## Optional modules and remaining custom work
 
-This is the first iteration of the Stackbook. Additional extensions, supporting modules,
-plugins, and skills are planned; select only gaps exercised by named use cases:
+Released optional packages and deployment-specific work serve different purposes.
+Select only modules needed by named use cases; package availability is not proof that a
+deployment has enabled or verified them:
 
 1. [hermes-web-research](https://github.com/ghosty-11/hermes-web-research) for a fail-closed web-research hop between capability-separated profiles;
 2. [hermes-omp-broker](https://github.com/ghosty-11/hermes-omp-broker) for typed Hermes-to-OMP coding delegation;

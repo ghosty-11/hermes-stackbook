@@ -7,6 +7,18 @@ Notable changes to the Hermes Stackbook. The format follows
 releases, not software versions. Compatibility evidence for upstream components lives in the
 [compatibility ledger](docs/compatibility.md), not here.
 
+## Unreleased
+
+### Changed
+
+- Gateway topology guidance now reflects the upstream multiplexing default: the gateway settles
+  multiplexing at a boot preflight, an explicit `gateway.multiplex_profiles: true` bypasses the
+  preflight, `gateway.multiplex_profiles: false` and `gateway.multiplex_profile_allowlist` are
+  retired, and a separate per-profile gateway needs the temporary `gateway.standalone: true`
+  override. The README, planning, verification, operations, sources, and deployment-checklist pages
+  align with the rewritten architecture and profiles pages, and the compatibility ledger pins the
+  upstream revision the guidance describes.
+
 ## 1.0.0 — 2026-08-23
 
 Initial release.

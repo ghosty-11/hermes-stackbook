@@ -92,30 +92,27 @@ Use the strongest boundary required by the data, not by the role name.
 
 ## Gateway deployment
 
-### Separate processes
+### Choose a supported topology
 
-Install and start one service per online profile:
+The bundled guide inspected on 2026-09-23 defaults to multiplexing after startup preflight.
+An explicit `gateway.multiplex_profiles: true` bypasses that unset-key preflight and serves
+every live named profile. `gateway.multiplex_profiles: false` and
+`gateway.multiplex_profile_allowlist` are retired; neither is a per-profile safety boundary.
 
-```sh
-scribe gateway install
-scribe gateway start
-research gateway install
-research gateway start
-```
+Read the installed `hermes gateway --help` and bundled
+`website/docs/user-guide/multi-profile-gateways.md` before changing topology. A separate
+per-profile process needs the release's explicit standalone override. Separate process
+lifetime still does not imply filesystem isolation.
 
-Use this for the first deployment and for an optional public bot, if enabled.
+Inventory profiles, enabled platforms and scheduled work before activating multiplexing.
+Do not start a second gateway for a profile already served by the default process.
+Removing a profile from the served set through archiving or deletion is a separately
+authorized operation, not a configuration cleanup.
 
-### Multiplexed private profiles
-
-On the default profile:
-
-```sh
-hermes config set gateway.multiplex_profiles true
-```
-
-Set an explicit `gateway.multiplex_profile_allowlist` in `config.yaml`, then restart only after reviewing the official [multiplexing contract](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways). Omitting the key is **fail-open for profile selection**: the current default serves *every* installed named profile, so a half-finished or experimental profile directory becomes a served execution scope — its plugins load and its schedules tick — without a deliberate decision. An empty list serves only the default profile. Do not run secondary gateway services for profiles served by the multiplexer.
-
-Test per-profile model, `.env`, memory, skill, cron, and platform resolution. A shared process reduces service count; it does not reduce the need for profile-by-profile verification. Under multiplexing, live sessions for every served profile persist in the serving profile's state database (tagged by profile name), not in each profile's own state file — see [Architecture](architecture.md#data-plane).
+Test per-profile model, `.env`, memory, skill, cron, and platform resolution. A shared process
+reduces service count; it does not reduce profile-by-profile verification. Resolve the live
+session store with a known control message rather than assuming either the serving or named
+profile owns it — see [Architecture](architecture.md#data-plane).
 
 ## Model routing
 
@@ -154,6 +151,30 @@ Options:
 - no persistent memory for stateless quarantine/auditor jobs.
 
 For an optional public bot, scope facts by stable numeric platform user ID, not display name. Do not let a public identity recall another user's information. Subagents should not mutate persistent memory unless that is the explicit task.
+
+### Companion context
+
+A companion needs a stable identity and a small, attributed view of the current situation,
+not repeated instruction blocks. Separate admission from response: permission to consider a
+message does not require a canned acknowledgment. Record what the audience actually receives,
+including intentional silence and failed delivery, rather than treating the model's draft
+as proof of a successful reply.
+
+Delimit every injected block by type and provenance. Escape quotes, topics, names and retrieved
+text inside those delimiters; tags are not authorization. Freeze a bounded context bundle at
+the turn boundary so tool iterations do not repeat retrieval or move changing instructions
+through the request. Check system/tool stability, conversation-prefix reuse and provider
+cache accounting separately.
+
+Privacy outranks cache reuse. Speaker-specific recall must not become replayable history for
+another speaker. Scope automatic recall, explicit memory tools and session search equally;
+an arbitrary profile selector or a person's name cannot grant access to their conversation.
+Keep corrections, consent and unresolved commitments across compaction, without turning
+roleplay or inferred affection into biographical facts.
+
+Inspect the rendered skill index and actual read tool before relying on a procedure. A
+configured enabled skill may still be unreachable. Do not grant skill creation or installation
+to a public profile merely to expose read-only instructions.
 
 ## Profile acceptance
 

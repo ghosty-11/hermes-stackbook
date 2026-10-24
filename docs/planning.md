@@ -77,12 +77,12 @@ Keep public-content roles on cheaper models if desired. Keep private operational
 
 ## Gateway topology decision
 
-Start with one process per profile. Choose multiplexing only after answering yes to all of these:
+Multiplexing is the default: the gateway settles it at boot with a preflight and serves every live named profile unless something unsafe blocks it. Keep the multiplexed topology only after answering yes to all of these; a `no` means the deliberate `gateway.standalone: true` exception, not a return to the retired per-profile default.
 
 - A shared restart domain is acceptable.
 - Every secondary profile has a distinct bot token or an explicit supported route.
 - HTTP-inbound platform configuration follows the `/p/<profile>/` contract.
-- The allowlist names exactly the profiles the gateway should serve.
+- The live profile inventory under `profiles/` was verified against the gateway's served set and names exactly the profiles the deployment should serve; anything else is archived or deleted, or opts out with `gateway.standalone: true`.
 - Plugins and profile-specific credentials were tested under multiplexing.
 - The optional public-facing profile, if enabled, does not need a stronger process boundary.
 

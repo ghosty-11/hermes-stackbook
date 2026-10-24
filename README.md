@@ -217,9 +217,12 @@ flowchart LR
     P --> B[Off-host backup]
 ```
 
-[Core concepts](docs/core-concepts.md) walks one request through that minimum path. Hermes can
-run one gateway process per profile—the upstream default—or multiplex selected profiles through
-one gateway. Start with separate processes unless process density is a real constraint.
+[Core concepts](docs/core-concepts.md) walks one request through that minimum path. A Hermes
+gateway multiplexes by default: at boot, a preflight folds in every live profile unless something
+unsafe blocks it, and an explicit `gateway.multiplex_profiles: true` bypasses that check. A
+separate per-profile gateway is a temporary exception that requires `gateway.standalone: true` in
+that profile's config. Inventory the profiles, platforms, and scheduled work a topology serves
+before changing it.
 
 ## Reading order
 

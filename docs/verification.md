@@ -179,7 +179,7 @@ Guard resolved intent such as:
 
 - every expected profile exists and no unexpected online profile appears;
 - public/research/auditor forbidden tools are absent;
-- gateway topology and allowlist match policy;
+- gateway topology and the served profile inventory match policy;
 - platform admissions are not open accidentally;
 - cron model pins/defaults and dangerous-command policy match;
 - fallback chains cross providers and end in the expected local lane where configured;

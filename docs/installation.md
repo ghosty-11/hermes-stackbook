@@ -164,7 +164,7 @@ Delay all of the following until the baseline passes:
 
 - community plugins or skills;
 - an optional public bot;
-- multiplexed gateway mode;
+- additional live profiles, and any separate per-profile gateway override;
 - model-driven cron jobs;
 - local inference;
 - a custom Hermes–OMP bridge;

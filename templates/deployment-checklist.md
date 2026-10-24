@@ -40,7 +40,7 @@ Copy this checklist into the private deployment repository. Attach commands and 
 - [ ] Positive scenario passes per profile.
 - [ ] Forbidden scenario is structurally unavailable per profile.
 - [ ] Models, fallbacks, memory, skills, and plugins resolve as intended.
-- [ ] Gateway process or multiplex allowlist is explicit.
+- [ ] Gateway topology is deliberate, and the served profile inventory is verified against the live profile set.
 - [ ] Optional public profile, if present, has a separate failure/security boundary.
 
 ## Optional: research

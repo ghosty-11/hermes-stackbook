@@ -9,7 +9,7 @@ Reviewed 2026-08-14. Prefer official documentation and source repositories for b
 - [CLI commands reference](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/reference/cli-commands.md) — terminal command families including status, backup/import, security audit, skills, plugins, profiles, gateway, egress, and cron.
 - [Configuration](https://hermes-agent.nousresearch.com/docs/user-guide/configuration/) — config precedence, secrets, terminal backends, provider timeouts, updates, and managed settings.
 - [Profiles](https://hermes-agent.nousresearch.com/docs/user-guide/profiles/) — profile state, creation, services, and the explicit warning that profiles are not sandboxes.
-- [Running Many Gateways](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways) — separate-process default, multiplexing, allowlists, token conflicts, and profile routes.
+- [Running Many Gateways](https://hermes-agent.nousresearch.com/docs/user-guide/multi-profile-gateways) — multiplex-by-default gateway topology, boot preflight, standalone override, token conflicts, and profile routes.
 - [Security](https://hermes-agent.nousresearch.com/docs/user-guide/security/) — authorization, approvals, deny rules, file safety, isolation, and input controls.
 - [Cron](https://hermes-agent.nousresearch.com/docs/user-guide/features/cron) — model pins, no-agent mode, preflight, model drift, work directories, delivery, and job lifecycle.
 - [Skills](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills) — discovery, installation, enablement, authoring, and bundles.
